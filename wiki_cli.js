@@ -1,6 +1,9 @@
 import { commands } from "./commands.js";
+import { write_title } from "./util/console.js";
 
 async function main() {
+	await write_title("Mikki!");
+	
 	var arg_copy = Object.assign([], Deno.args);
 	var sub_command = arg_copy.shift();
 
