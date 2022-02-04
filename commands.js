@@ -5,6 +5,7 @@ import { DeleteCommand } from './command/delete_command.js';
 import { CreateCommand } from './command/create_command.js';
 import { ListCommand } from './command/list_command.js';
 import { EditCommand } from './command/edit_command.js';
+import { ChangeLogCommand } from './command/changelog_command.js';
 
 export var commands = [
 	{
@@ -34,5 +35,9 @@ export var commands = [
 	{
 		name: "edit",
 		command: EditCommand
+	},
+	{
+		name: "changelog",
+		command: ChangeLogCommand
 	}
 ];

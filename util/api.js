@@ -62,6 +62,14 @@ export function wiki_delete(token, page_id) {
 	});
 }
 
+export function wiki_changelog() {
+	return new Promise((resolve, reject) => {
+		fetch(base_api + "/wiki/page/changelog").then(response => response.json()).then(response => {
+			resolve(response);
+		});
+	});
+}
+
 export function check_login(token) {
 	return new Promise((resolve, reject) => {
 		fetch(base_api + "/login/check?token=" + token).then(response => response.json()).then(response => {
