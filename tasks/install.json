@@ -1,0 +1,10 @@
+{
+	"name": "install",
+	"commands": [
+		"deno compile -A wiki_cli.js",
+		"sudo cp wiki_cli ${install_path}"
+	],
+	"dependencies": [],
+	"run_after_task": [],
+	"allow_fail": false
+}
