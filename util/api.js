@@ -17,42 +17,53 @@ export function status_login(login_id) {
 }
 
 export function wiki_create(token, page_title, page_text) {
-	var page_title_encoded = btoa(page_title);
-	var page_text_encoded = btoa(page_text);
+	var page_title_encoded = btoa(encodeURIComponent(page_title));
+	var page_text_encoded = btoa(encodeURIComponent(page_text));
+
 
 	return new Promise((resolve, reject) => {
-		fetch(base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded).then(response => response.json()).then(response => {
+		fetch(base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded).then(response => response.text()).then(response => {
+			response = decodeURIComponent(response);
+			response = JSON.parse(response);
 			resolve(response);
 		});
 	});
 }
+
+
 
 export function wiki_get(page_id) {
 	return new Promise((resolve, reject) => {
-		fetch(base_api + "/wiki/page/get?page_id=" + page_id).then(response => response.json()).then(response => {
+		fetch(base_api + "/wiki/page/get?page_id=" + page_id).then(response => response.text()).then(response => {
+			response = decodeURIComponent(response);
+			response = JSON.parse(response);
 			resolve(response);
 		});
 	});
 }
+
+
 
 export function wiki_edit(token, page_id, page_title, page_text) {
-	var page_title_encoded = btoa(page_title);
-	var page_text_encoded = btoa(page_text);
+	var page_title_encoded = btoa(encodeURIComponent(page_title));
+	var page_text_encoded = btoa(encodeURIComponent(page_text));
 
 	return new Promise((resolve, reject) => {
-		fetch(base_api + "/wiki/page/edit?token=" + token + "&page_id=" + page_id + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded).then(response => response.json()).then(response => {
+		fetch(base_api + "/wiki/page/edit?token=" + token + "&page_id=" + page_id + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded).then(response => response.text()).then(response => {
+			response = decodeURIComponent(response);
+			response = JSON.parse(response);
 			resolve(response);
 		});
 	});
 }
 
-export function wiki_list() {
-	return new Promise((resolve, reject) => {
-		fetch(base_api + "/wiki/page/list").then(response => response.json()).then(response => {
-			resolve(response);
-		});
-	});
+
+
+export async function wiki_list() {
+	const res = await fetch(base_api + "/wiki/page/list");
+	return await res.json();
 }
+
 
 export function wiki_delete(token, page_id) {
 	return new Promise((resolve, reject) => {
@@ -62,13 +73,18 @@ export function wiki_delete(token, page_id) {
 	});
 }
 
+
+
 export function wiki_changelog() {
 	return new Promise((resolve, reject) => {
-		fetch(base_api + "/wiki/page/changelog").then(response => response.json()).then(response => {
+		fetch(base_api + "/wiki/page/changelog").then(response => response.text()).then(response => {
+			response = decodeURIComponent(response);
+			response = JSON.parse(response);
 			resolve(response);
 		});
 	});
 }
+
 
 export function check_login(token) {
 	return new Promise((resolve, reject) => {
