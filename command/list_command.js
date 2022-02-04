@@ -9,7 +9,7 @@ export class ListCommand extends BaseCommand {
 	execute() {
 		wiki_list().then(response => {
 			for (let page of response) {
-				console.log(page.page_id + " -> " + page.page_title);
+				console.log(page.page_id + " -> " + page.page_title + `(created: ${new Date(page.page_created).toLocaleString()}, edited: ${new Date(page.page_edited).toLocaleString()})`);
 			}
 		});
 	}

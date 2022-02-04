@@ -25,7 +25,11 @@ export class DumpCommand extends BaseCommand {
 
 				Deno.writeTextFileSync("./dump/" + wiki_entry.page_title + ".md", page.page_text);
 
-				map[wiki_entry.page_title] = page.page_id;
+				map[wiki_entry.page_title] = {
+					page_id: wiki_entry.page_id,
+					page_created: wiki_entry.page_created,
+					page_edited: wiki_entry.page_edited
+				};
 			}
 
 			Deno.writeTextFileSync("./dump/map.json", JSON.stringify(map, null, "\t"));
