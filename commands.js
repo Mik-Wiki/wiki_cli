@@ -6,6 +6,7 @@ import { CreateCommand } from './command/create_command.js';
 import { ListCommand } from './command/list_command.js';
 import { EditCommand } from './command/edit_command.js';
 import { ChangeLogCommand } from './command/changelog_command.js';
+import { GetCommand } from './command/get_command.js';
 
 export var commands = [
 	{
@@ -39,5 +40,9 @@ export var commands = [
 	{
 		name: "changelog",
 		command: ChangeLogCommand
+	},
+	{
+		name: "get",
+		command: GetCommand
 	}
 ];
