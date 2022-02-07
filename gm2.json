@@ -6,7 +6,7 @@
 	"task_dir": "tasks",
 	"custom_header": "Mikki",
 	"variables": {
-		"install_path": "/bin/mikki"
+		"install_path": "/bin/mikki_cli"
 	},
 	"non_silent": true
 }
