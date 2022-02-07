@@ -1,13 +1,18 @@
 var base_api = "https://x.glowman554.gq/api/v2"
 
 
-const needs_escape = [
-	"\"",
-];
+const escape_map = {
+	"\\\\": "\\\\",
+	"\"": "\\\"",
+	"\b": "\\b",
+	"\f": "\\f",
+	"\n": "\\n",
+	"\t": "\\t"
+}
 
 export function process_escapes(input) {
-	for (let escape of needs_escape) {
-		input = input.replace(new RegExp(escape, "g"), "\\" + escape);
+	for (let escape in escape_map) {
+		input = input.replace(new RegExp(escape, "g"), escape_map[escape]);
 	}
 	return input;
 }
