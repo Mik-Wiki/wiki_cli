@@ -1,5 +1,23 @@
 var base_api = "https://x.glowman554.gq/api/v2"
 
+
+const needs_escape = [
+	"\"",
+];
+
+export function process_escapes(input) {
+	for (let escape of needs_escape) {
+		input = input.replace(new RegExp(escape, "g"), "\\" + escape);
+	}
+	return input;
+}
+
+export function process_response(data) {
+	data = decodeURIComponent(data);
+	data = JSON.parse(data);
+	return data;
+}
+
 export function start_login() {
 	return new Promise((resolve, reject) => {
 		fetch(base_api + "/login/start").then(response => response.json()).then(response => {
@@ -17,41 +35,33 @@ export function status_login(login_id) {
 }
 
 export async function wiki_create(token, page_title, page_text) {
-	var page_title_encoded = btoa(encodeURIComponent(page_title).replace(/%0[aA]/g, '\n'));
-	var page_text_encoded = btoa(encodeURIComponent(page_text).replace(/%0[aA]/g, '\n'));
+	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
+	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
 
 	const res = await fetch(base_api + "/wiki/page/create?token=" + token + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded);
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	return process_response(data);
 }
 
 export async function wiki_get(page_id) {
 	const res = await fetch(base_api + "/wiki/page/get?page_id=" + page_id);
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	return process_response(data);
 }
 
 export async function wiki_edit(token, page_id, page_title, page_text) {
-	var page_title_encoded = btoa(encodeURIComponent(page_title).replace(/%0[aA]/g, '\n'));
-	var page_text_encoded = btoa(encodeURIComponent(page_text).replace(/%0[aA]/g, '\n'));
+	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
+	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
 
 	const res = await fetch(base_api + "/wiki/page/edit?token=" + token + "&page_id=" + page_id + "&page_title=" + page_title_encoded + "&page_text=" + page_text_encoded);
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	return process_response(data);
 }
 
 export async function wiki_list() {
 	const res = await fetch(base_api + "/wiki/page/list");
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	return process_response(data);
 }
 
 export async function wiki_delete(token, page_id) {
@@ -62,9 +72,7 @@ export async function wiki_delete(token, page_id) {
 export async function wiki_changelog() {
 	const res = await fetch(base_api + "/wiki/page/changelog");
 	let data = await res.text();
-	data = decodeURIComponent(data);
-	data = JSON.parse(data);
-	return data;
+	return process_response(data);
 }
 
 // to edit: wiki_editor, to delete: wiki_delete
