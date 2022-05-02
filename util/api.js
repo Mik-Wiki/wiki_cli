@@ -39,6 +39,14 @@ export function status_login(login_id) {
 	});
 }
 
+export function stop_login(login_id) {
+	return new Promise((resolve, reject) => {
+    		fetch(base_api + "/login/stop?login_id=" + login_id).then(response => response.json()).then(response => {
+			resolve(response.token);
+    		});
+	});
+}
+
 export async function wiki_create(token, page_title, page_text) {
 	var page_title_encoded = btoa(encodeURIComponent(process_escapes(page_title)).replace(/%0[aA]/g, '\n'));
 	var page_text_encoded = btoa(encodeURIComponent(process_escapes(page_text)).replace(/%0[aA]/g, '\n'));
@@ -108,6 +116,8 @@ export async function login() {
 			await new Promise(resolve => setTimeout(resolve, 1000));
 		}
 	} while (token == null);
+
+	stop_login(login_id);
 
 	return token;
 }
