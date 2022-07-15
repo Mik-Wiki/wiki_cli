@@ -8,6 +8,7 @@ import { EditCommand } from './command/edit_command.js';
 import { ChangeLogCommand } from './command/changelog_command.js';
 import { GetCommand } from './command/get_command.js';
 import { MultiCreateCommand } from './command/multi_create_command.js';
+import { StaticHtmlCommand } from './command/static_html_command.js';
 
 export var commands = [
 	{
@@ -49,5 +50,9 @@ export var commands = [
 	{
 		name: "multi_create",
 		command: MultiCreateCommand
+	},
+	{
+		name: "static_html",
+		command: StaticHtmlCommand
 	}
 ];
