@@ -3,6 +3,10 @@ import { BaseCommand } from '../base_command.js';
 import { wiki_list, wiki_get } from '../util/api.js';
 import { update_console_line } from '../util/console.js';
 
+var name_replacer = function(name) {
+	return name.replace(/[^a-zA-Z0-9]/g, '_');
+}
+
 export class DumpCommand extends BaseCommand {
 	constructor(args) {
 		super(args, []);
@@ -23,7 +27,7 @@ export class DumpCommand extends BaseCommand {
 				update_console_line(idx++ + 1, len, "Dumping wiki page " + wiki_entry.page_title);
 				let page = await wiki_get(wiki_entry.page_id);
 
-				Deno.writeTextFileSync("./dump/" + wiki_entry.page_title + ".md", page.page_text);
+				Deno.writeTextFileSync("./dump/" + name_replacer(wiki_entry.page_title) + ".md", page.page_text);
 
 				map[wiki_entry.page_title] = {
 					page_id: wiki_entry.page_id,
